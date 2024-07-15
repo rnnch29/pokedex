@@ -69,7 +69,7 @@ function Pocket() {
             </div>
           </div>
           <div className='flex justify-center'>
-            <button className="w-[250px] h-[50px] rounded-md bg-[#ff6f61] text-white text-[14px]">Proceed To Checkout</button>
+            <button className="w-[250px] h-[50px] rounded-md bg-[#ff6f61] text-white text-[14px]">Checkout</button>
           </div>
         </div>
       </div>

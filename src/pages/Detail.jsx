@@ -5,12 +5,15 @@ import arrowLeft from '../assets/icons/arrow-left.svg';
 import bag2 from '../assets/icons/bag-2.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { add } from '../store/slices/pocketSlice';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 function Detail() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [pokemonData, setPokemonData] = useState(null);
     const [inpQty, setInpQty] = useState(1);
+    const MySwal = withReactContent(Swal);
 
 
     const fetchPokemonDetail = async () => {
@@ -38,6 +41,15 @@ function Detail() {
         dispatch(add({ ...pokemon, qty: qtyVal }));
     }
 
+    const showAddPopup = () => {
+        MySwal.fire({
+            icon: "success",
+            title: "Product added to cart.",
+            showConfirmButton: false,
+            timer: 1000
+        });
+    }
+
     useEffect(() => {
         fetchPokemonDetail();
     }, [id]);
@@ -54,7 +66,8 @@ function Detail() {
                 <Link to='/' className='font-bold'>Back</Link>
             </div>
 
-            <div className="w-full h-[385px] shadow rounded-md p-3 flex gap-40 bg-white">
+            <div className="w-full h-[385px] shadow rounded-md p-3 flex gap-40 bg-white relative">
+
                 <div className="w-[353px] h-[353px]">
                     <img src={pokemonData?.sprites?.other?.['official-artwork']?.front_default} alt={pokemonData?.name} className="w-full" />
                 </div>
@@ -87,7 +100,10 @@ function Detail() {
                     </div>
 
                     <button className="w-[255px] h-[50px] bg-[#ff6f61] rounded-md text-white font-bold flex items-center justify-center gap-2 mt-3"
-                        onClick={e => addToPocket(pokemonData, inpQty)}>
+                        onClick={e => {
+                            addToPocket(pokemonData, inpQty)
+                            showAddPopup()
+                        }}>
                         <img src={bag2} alt="" />
                         <span>Add To Pocket</span>
                     </button>

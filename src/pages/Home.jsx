@@ -57,7 +57,7 @@ function Home() {
         </div>
       </div>
 
-      {searchKey !== '' && pokemonList.length < 1 ? (
+      {searchKey && pokemonList.length < 1 ? (
         <div className="mt-10">
           <div className="flex justify-center my-5">
             <img src={notFound} alt="" />

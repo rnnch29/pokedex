@@ -14,21 +14,24 @@ function Header() {
   const navigate = useNavigate();
 
   const handleClearSearch = () => {
-    setSearchKey('')
+    setSearchKey('');
     setSearchParams({});
   };
 
-  const handleSearch = (e) => {
-    const value = e.target.value.trim();
-    setSearchKey(value);
-    navigate(`/?search=${value}`);
-  }
+  const handleSearchInputChange = (e) => {
+    setSearchKey(e.target.value);
+  };
 
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    const searchValue = params.get('search') || '';
-    setSearchKey(searchValue);
-  }, [searchParams]);
+  const handleSearch = () => {
+    const value = searchKey.trim();
+    navigate(`/?search=${value}`);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
 
   return (
@@ -45,7 +48,8 @@ function Header() {
           <input
             type="text"
             value={searchKey}
-            onChange={handleSearch}
+            onChange={handleSearchInputChange}
+            onKeyDown={handleKeyDown}
             placeholder="Search name Pokémon ..."
             className="w-[507px] h-[48px] bg-[#F8F8F8] rounded-md pl-[50px] pr-4 py-2 focus:outline-none caret-[#FFCB05] focus:ring-2 focus:ring-[#FFCB05]"
           />
